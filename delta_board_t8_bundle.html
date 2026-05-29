@@ -121,6 +121,9 @@
   .mkt-casos { display: flex; flex-wrap: wrap; gap: 4px; }
   .mkt-caso-chip { font-size: 11px; padding: 3px 9px; border-radius: 10px; background: #1F3331; color: #F5F0EB; }
   .mkt-areas { font-size: 11px; color: #5C6C51; font-style: italic; }
+  .mkt-link { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: 2px; background: #1F3331; color: #F5F0EB; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+  .mkt-link:hover { background: #2D4A47; }
+  .mkt-link svg { width: 13px; height: 13px; }
   .mkt-tech { display: flex; flex-wrap: wrap; gap: 4px; }
   .mkt-tech-chip { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: #E0E5DC; color: #3B635F; text-transform: uppercase; letter-spacing: 0.5px; }
   .mkt-none { background: #FFFFFF; border: 0.5px dashed rgba(31,51,49,0.2); border-radius: 10px; padding: 14px 18px; font-size: 12px; color: #9A9485; line-height: 1.5; margin-top: 16px; }
@@ -716,66 +719,79 @@ buildClusterCards();
 
 const MARKETPLACE = [
   { nome: 'LeadWhats', aderencia: 'Alta', tech: ['Lovable','Z-API','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/leadwhats',
     desc: 'Qualificação e análise de leads via WhatsApp com IA — scoring automático e gestão de conversas.',
     dores: 'Baixa conversão comercial; CRM/planilhas preenchidos manualmente; responder muitos clientes sem retorno; agendamento e vendas; escalar prospecção B2B.',
     casos: ['#0 BWA','#9 Luza','#27 Enjoy','#29 Sofavix','#44 Clínica NIA','#45 Studio Padilha','#52 Elo','#68 Foccus','#74 Workline','#80 Clube do Valor'],
     areas: 'Comercial · Vendas · CRM' },
   { nome: 'ProcessBuilder', aderencia: 'Alta', tech: ['Lovable','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/processbuilder',
     desc: 'Modelagem e desenho de processos (BPMN) com sugestões de melhoria por IA.',
     dores: 'Automatização e padronização de processos; processos incipientes; maximizar processos que consomem tempo; reduzir retrabalho.',
     casos: ['#5 Arruda','#15 Iron House','#37 Sofavix','#53 Deepsea','#58 Dravin','#61 Neobag','#64 Deepsea','#75 Masetti','#77 Benefx'],
     areas: 'Operações · Processos · Qualidade' },
   { nome: 'FlowEasy', aderencia: 'Alta', tech: ['Lovable','Supabase'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/floweasy',
     desc: 'Motor de automação visual no estilo n8n — workflows drag-and-drop sob seu domínio.',
     dores: 'Automação de processos internos/externos; gargalos operacionais; eficiência operacional; integração de sistemas.',
     casos: ['#5 Arruda','#11 Darwin','#23 Getnet','#42 Advice','#61 Neobag'],
     areas: 'T.I. · Operações · Inovação' },
   { nome: 'BoardVoice', aderencia: 'Média-alta', tech: ['Lovable','ElevenLabs','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/boardvoice',
     desc: 'Resumos executivos inteligentes de reuniões e documentos, com geração de voz.',
     dores: 'Falta de visão de resultados para decisão; relatórios manuais; clareza executiva.',
     casos: ['#27 Enjoy','#34 Construtora Tenda','#36 Gab Transportes'],
     areas: 'Diretoria · Estratégia' },
   { nome: 'FanthomSync', aderencia: 'Média-alta', tech: ['Lovable','Fathom','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/fanthomsync',
     desc: 'Captura e transcrição de reuniões (Fathom) com resumo e extração de tarefas via IA.',
     dores: 'Gestão de contexto; registro de reuniões e oportunidades; consolidação de informações.',
     casos: ['#17 uMode','#34 Construtora Tenda','#42 Advice'],
     areas: 'Operações · Gestão do Conhecimento' },
   { nome: 'AI on Board', aderencia: 'Média-alta', tech: ['Lovable','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/ai-on-board',
     desc: 'Painel de insights estratégicos para conselhos e lideranças.',
     dores: 'ROI em IA; business case; engajar lideranças na transformação; dashboard executivo do CEO.',
     casos: ['#19 Nitro','#31 Elo e-Health','#35 Comerc','#50 Elo'],
     areas: 'Diretoria · Estratégia · Governança' },
   { nome: 'TalentMatch Pro', aderencia: 'Média', tech: ['Lovable','Supabase'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/talentmatch-pro',
     desc: 'Match inteligente entre demandas e profissionais qualificados.',
     dores: 'Automatizar recrutamento e seleção; triagem de perfis; hunting de candidatos.',
     casos: ['#7 Luza','#13 Darwin','#73 IDP','#79 Clube do Valor'],
     areas: 'RH · Recrutamento' },
   { nome: 'Role Play CTO', aderencia: 'Média', tech: ['Lovable','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/role-play-cto',
     desc: 'Simulador de entrevistas técnicas com IA, com avaliação em tempo real.',
     dores: 'Reengenharia de processos de R&S; capacitação e avaliação de perfis.',
     casos: ['#13 Darwin','#79 Clube do Valor'],
     areas: 'RH · Desenvolvimento Organizacional' },
   { nome: 'DataLake Sync', aderencia: 'Média', tech: ['Lovable','Supabase'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/datalake-sync',
     desc: 'Consolidação e unificação de bases de dados — uma única fonte da verdade.',
     dores: 'Planilhas/sistemas não integrados; dados fragmentados; qualidade nos números; integração de setores.',
     casos: ['#6 Luza','#10 Luza DHO','#36 Gab Transportes','#67 Enjoy'],
     areas: 'T.I. · Dados · Financeiro' },
   { nome: 'AI Governance Plan', aderencia: 'Média', tech: ['Lovable','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/ai-governance-plan',
     desc: 'Assistente de governança, políticas, riscos e compliance de IA.',
     dores: 'Resistência ao uso de IA; inovação e cultura; engajar lideranças; entender o momento da IA.',
     casos: ['#22 Jera/Vordesk','#41 Vibra','#60 Interplus','#82 Super Professor'],
     areas: 'Governança · Diretoria · Compliance' },
   { nome: 'Content Writter', aderencia: 'Pontual', tech: ['Lovable','OpenAI'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/content-writter',
     desc: 'Geração de textos e imagens com IA a partir de fontes RSS atualizadas.',
     dores: 'Crescer de forma enxuta sem aumentar folha; máquina de conteúdo.',
     casos: ['#67 Enjoy','#69 Teraquiz'],
     areas: 'Marketing · Conteúdo' },
   { nome: 'BuddyBot', aderencia: 'Pontual', tech: ['Lovable','Telegram','Twilio','ElevenLabs'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/buddybot',
     desc: 'Bot de atendimento (Telegram) com voz — escala no canal do cliente.',
     dores: 'Atendimento ao cliente escalado; entrega/atendimento; onboarding + atendimento automatizado.',
     casos: ['#1 Colégio Status','#39 Mkt','#72 Instituto Higéia','#77 Benefx'],
     areas: 'Atendimento ao Cliente' },
   { nome: 'PixFlow', aderencia: 'Pontual', tech: ['Lovable','Mercado Pago'],
+    url: 'https://cockpit.deltaacademy.com.br/marketplace/pixflow',
     desc: 'Pagamentos via Pix com integração Mercado Pago — checkout sem fricção.',
     dores: 'Pagamento manual; alinhamento de processos financeiros.',
     casos: ['#8 Luza','#56 Sofavix'],
@@ -801,6 +817,7 @@ function renderMarketplace() {
       '<div class="mkt-dores"><span class="label">Dores que atende</span>' + esc(s.dores) + '</div>' +
       '<div class="mkt-block"><span class="label">Casos relacionados</span><div class="mkt-casos">' + casosHTML + '</div></div>' +
       '<div class="mkt-areas">' + esc(s.areas) + '</div>' +
+      (s.url ? '<a class="mkt-link" href="' + esc(s.url) + '" target="_blank" rel="noopener">Ver no marketplace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>' : '') +
     '</div>';
   }).join('');
   const none = document.getElementById('mkt-none');
