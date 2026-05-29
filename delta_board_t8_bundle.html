@@ -421,8 +421,12 @@ function matchesFilter(r) {
 }
 function nz(v) { return v && v !== '—' && v !== 'Não informado' ? v : ''; }
 
+function orderedStack(arr) {
+  return ['Claude', ...arr.filter(s => s !== 'Claude')];
+}
 function buildPrompt(r) {
-  const stack = r.caso.stack.join(' → ');
+  const os = orderedStack(r.caso.stack);
+  const secundarias = os.filter(s => s !== 'Claude');
   const L = [];
   L.push('# Caso ao vivo — ' + r.caso.arquetipo);
   L.push('');
@@ -477,9 +481,19 @@ function buildPrompt(r) {
   L.push('**Arquétipo:** ' + r.caso.arquetipo);
   L.push('');
   L.push(r.caso.descricao);
+  if (secundarias.length) {
+    L.push('');
+    L.push('> _Obs.: o fluxo acima é a rota sugerida. Reinterprete-o com o Claude no centro — execute cada etapa no Claude sempre que possível e só acione ' + secundarias.join('/') + ' na etapa específica em que o Claude não der conta._');
+  }
   L.push('');
   L.push('**Entregável ao fim dos 20 minutos:** ' + r.caso.entregavel_20min);
-  L.push('**Stack a utilizar (nesta ordem):** ' + stack);
+  L.push('');
+  L.push('**Motor principal: Claude.** Resolva o MÁXIMO possível da dor e do entregável dentro do próprio Claude, usando suas features nativas (Projects, Artifacts, ferramenta de análise/código, busca na web, upload de arquivos, Skills e extended thinking).');
+  if (secundarias.length) {
+    L.push('**Ferramentas secundárias (use SÓ se o Claude não resolver):** ' + secundarias.join(', ') + '. Antes de recorrer a qualquer uma delas, declare em voz alta por que o Claude sozinho não bastou.');
+  } else {
+    L.push('**Ferramentas secundárias:** nenhuma — esta missão roda 100% no Claude.');
+  }
   L.push('');
   L.push('---');
   L.push('');
@@ -487,11 +501,26 @@ function buildPrompt(r) {
   L.push('');
   L.push('1. Use o nome próprio do executivo (' + r.primeiro + ') nas interações para manter o tom pessoal.');
   L.push('2. Ancore TUDO no contexto real da empresa (' + r.empresa + ') — setor, porte, dor declarada, processo crítico. Não use exemplos genéricos.');
-  L.push('3. Comece pela primeira ferramenta da stack indicada e use as seguintes na ordem.');
-  L.push('4. Mostre cada output intermediário antes de avançar para o próximo passo.');
-  L.push('5. Se algum dado real precisar ser inferido (ex: tamanho do mercado, ICP exato), faça uma hipótese explícita e siga — não trave por falta de input.');
-  L.push('6. Documente cada passo de forma que o ' + r.primeiro + ' consiga replicar sozinho na ' + r.empresa + ' depois.');
-  L.push('7. Ao fim dos 20 minutos, entregue o resultado prometido (' + r.caso.entregavel_20min + ') de forma utilizável imediatamente.');
+  L.push('3. **Resolva primeiro dentro do Claude.** Escolha a feature nativa certa para cada etapa da dor:');
+  L.push('   - **Projects** — carregue e persista o contexto da empresa (documentos, dados, instruções) e mantenha memória ao longo da missão.');
+  L.push('   - **Artifacts** — produza o entregável de forma utilizável e iterável: dashboards, planilhas, apps, documentos, scripts, e-mails, fluxos, propostas.');
+  L.push('   - **Ferramenta de análise / código** — processe dados e planilhas (CSV/Excel), faça cálculos, gráficos, forecasts e simulações direto no chat.');
+  L.push('   - **Busca na web do Claude** — traga dados públicos, benchmarks e pesquisa de mercado com fontes.');
+  L.push('   - **Upload de arquivos** (PDF, imagens, planilhas) — trabalhe sobre os dados reais do executivo, não sobre suposições.');
+  L.push('   - **Claude Skills** — acione quando houver skill específica para a tarefa (ex.: gerar documentos, planilhas, apresentações).');
+  L.push('   - **Extended thinking** — use para diagnóstico, priorização e raciocínio estratégico mais complexo.');
+  if (secundarias.length) {
+    L.push('4. **Só recorra às ferramentas secundárias (' + secundarias.join(', ') + ') quando o Claude genuinamente não resolver** — e diga por quê antes de trocar:');
+    L.push('   - **Perplexity** — apenas para pesquisa web em tempo real, ampla e com citações, que ultrapasse a busca nativa do Claude.');
+    L.push('   - **Manus** — apenas para execução autônoma longa e multi-app (operar várias ferramentas externas sem supervisão).');
+    L.push('   - **Comet** — apenas para automação direta no navegador do executivo (cliques/preenchimentos em sistemas reais).');
+  } else {
+    L.push('4. Esta missão deve rodar **inteira no Claude** — não há ferramenta secundária prevista. Se topar um limite real, explicite-o em vez de improvisar fora do Claude.');
+  }
+  L.push('5. Mostre cada output intermediário (de preferência como Artifact) antes de avançar para o próximo passo.');
+  L.push('6. Se algum dado real precisar ser inferido (ex: tamanho do mercado, ICP exato), faça uma hipótese explícita e siga — não trave por falta de input.');
+  L.push('7. Documente cada passo de forma que o ' + r.primeiro + ' consiga replicar sozinho na ' + r.empresa + ' depois — idealmente salvo num Project + Artifact reutilizável.');
+  L.push('8. Ao fim dos 20 minutos, entregue o resultado prometido (' + r.caso.entregavel_20min + ') de forma utilizável imediatamente.');
   L.push('');
   L.push('Comece agora.');
   return L.join('\n');
@@ -534,9 +563,12 @@ function renderCases() {
     return;
   }
   cardsEl.innerHTML = filtered.map(r => {
-    const stackHTML = r.caso.stack.map(s => {
+    const stackHTML = orderedStack(r.caso.stack).map((s, i) => {
       const bg = STACK_COLORS[s] || '#9A9485';
-      return '<span class="stack-chip" style="background: ' + bg + ';">' + s + '</span>';
+      const sec = i > 0;
+      const style = 'background: ' + bg + ';' + (sec ? ' opacity: 0.5;' : '');
+      const title = sec ? 'Secundária — usar só se o Claude não resolver' : 'Motor principal';
+      return '<span class="stack-chip" style="' + style + '" title="' + title + '">' + s + '</span>';
     }).join('');
     const decisaoBlock = r.decisao_clean ? 
       '<div class="card-decision"><span class="label">Decisão 90d</span>' + esc(r.decisao_clean.substring(0, 140)) + (r.decisao_clean.length > 140 ? '…' : '') + '</div>' : '';
