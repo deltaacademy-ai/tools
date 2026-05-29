@@ -431,13 +431,13 @@ function buildPrompt(r) {
   const os = orderedStack(r.caso.stack);
   const secundarias = os.filter(s => s !== 'Claude');
   const L = [];
-  L.push('# Caso ao vivo — ' + r.caso.arquetipo);
+  L.push('# ' + r.caso.arquetipo + ' — sua missão ao vivo');
   L.push('');
-  L.push('Você está executando esta missão AO VIVO em frente ao executivo abaixo, durante a Clínica AI-First do Delta Board 8 (sexta-feira, 09:30–11:00, ~80 CEOs/Founders/C-levels brasileiros assistindo). Você tem 20 minutos.');
+  L.push('Você é o Claude, atuando como consultor de IA pessoal do executivo descrito abaixo. Essa pessoa está conversando com você AGORA, ao vivo, durante a Clínica AI-First do Delta Board 8, e quer resolver um desafio real da empresa dela nos próximos ~20 minutos. **Trate quem está do outro lado como o próprio executivo abaixo — fale diretamente com ele, na segunda pessoa, de forma pessoal.** Não há facilitador: você conduz a sessão sozinho com ele.');
   L.push('');
   L.push('---');
   L.push('');
-  L.push('## CONTEXTO DO EXECUTIVO');
+  L.push('## QUEM ESTÁ FALANDO COM VOCÊ (o executivo)');
   L.push('');
   L.push('**Nome completo:** ' + r.nome_completo);
   L.push('**Cargo:** ' + r.cargo);
@@ -502,7 +502,7 @@ function buildPrompt(r) {
   L.push('');
   L.push('## INSTRUÇÕES DE EXECUÇÃO');
   L.push('');
-  L.push('1. Use o nome próprio do executivo (' + r.primeiro + ') nas interações para manter o tom pessoal.');
+  L.push('1. Fale diretamente com ' + r.primeiro + ' (segunda pessoa, tom pessoal) — é ele quem está colando este prompt e conduzindo a sessão com você.');
   L.push('2. Ancore TUDO no contexto real da empresa (' + r.empresa + ') — setor, porte, dor declarada, processo crítico. Não use exemplos genéricos.');
   L.push('3. **Resolva primeiro dentro do Claude.** Escolha a feature nativa certa para cada etapa da dor:');
   L.push('   - **Projects** — carregue e persista o contexto da empresa (documentos, dados, instruções) e mantenha memória ao longo da missão.');
@@ -521,9 +521,10 @@ function buildPrompt(r) {
     L.push('4. Esta missão deve rodar **inteira no Claude** — não há ferramenta secundária prevista. Se topar um limite real, explicite-o em vez de improvisar fora do Claude.');
   }
   L.push('5. Mostre cada output intermediário (de preferência como Artifact) antes de avançar para o próximo passo.');
-  L.push('6. Se algum dado real precisar ser inferido (ex: tamanho do mercado, ICP exato), faça uma hipótese explícita e siga — não trave por falta de input.');
-  L.push('7. Documente cada passo de forma que o ' + r.primeiro + ' consiga replicar sozinho na ' + r.empresa + ' depois — idealmente salvo num Project + Artifact reutilizável.');
-  L.push('8. Ao fim dos 20 minutos, entregue o resultado prometido (' + r.caso.entregavel_20min + ') de forma utilizável imediatamente.');
+  L.push('6. Se faltar um dado crítico da ' + r.empresa + ' (ex: tamanho do mercado, ICP, números reais), **pergunte diretamente a ' + r.primeiro + ' antes de seguir** — ele está aqui e pode te responder na hora. Faça no máximo 2–3 perguntas objetivas de cada vez; se ele não souber, assuma uma hipótese explícita e siga, sem travar.');
+  L.push('7. Conduza em passos curtos: ao fim de cada etapa, mostre o resultado e diga claramente qual é o próximo passo, para ' + r.primeiro + ' acompanhar sozinho sem se perder.');
+  L.push('8. Deixe tudo replicável: ' + r.primeiro + ' deve conseguir refazer isso sozinho na ' + r.empresa + ' depois — idealmente salvo num Project + Artifact reutilizável.');
+  L.push('9. Ao fim dos ~20 minutos, entregue o resultado prometido (' + r.caso.entregavel_20min + ') de forma utilizável imediatamente.');
   L.push('');
   L.push('Comece agora.');
   return L.join('\n');
