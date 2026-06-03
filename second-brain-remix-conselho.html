@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-palette="dusk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Brain Remix, seu Conselho de Mentores &mdash; Delta Academy Tools</title>
+<link rel="icon" href="https://tools.deltaacademy.com.br/icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  [data-palette="dusk"]{--bg:#141F1D;--white:#1A2927;--panel:#1A2927;--accent:#A4AE9C;--accent2:#D1AA53;--accent-light:#2A433F;--accent-lighter:#223532;--accent-border:#385652;--accent-text:#E3E6DE;--blue:#8BB3D9;--blue-light:#1E3147;--blue-border:#385D80;--blue-text:#C4DBEF;--green:#A8C68C;--green-light:#1F3322;--green-border:#3F5D35;--green-text:#D4E5BF;--gold:#D1AA53;--text:#ECEAE0;--text2:#C7CEC1;--text3:#8A938F;--border:#2A433F;--border2:#385652;--ficha-td1-bg:#1F3331;--ficha-th-bg:#223532;--card-tag-bg:#D1AA53;--card-tag-fg:#141F1D;--sidebar-bg:#0A1211;--sidebar-fg:#ECEAE0;--sidebar-sub:#D1AA53;--sidebar-muted:rgba(236,234,224,0.5);--sidebar-item:rgba(236,234,224,0.75);--sidebar-border:rgba(236,234,224,0.08);--sidebar-hover:rgba(209,170,83,0.12);--sidebar-active-bg:#2A433F;--sidebar-active-fg:#D1AA53;--sp-bar-track:rgba(236,234,224,0.1);--sp-bar-fill:#D1AA53;--copy-btn-bg:#1A2927;--copy-btn-border:#2A433F;--copy-btn-fg:#A4AE9C;--copy-btn-hover-bg:#D1AA53;--copy-btn-hover-fg:#141F1D;--warn-bg:#2E2512;--warn-border:#B8933E;--warn-accent:#D1AA53;--warn-label:#E6C784;--warn-text:#E6C784;--insight-bg:#0A1211;--insight-label:#D1AA53;--insight-fg:#ECEAE0;--insight-strong:#D1AA53;--shadow-xs:0 1px 2px rgba(0,0,0,0.4);--shadow-sm:0 2px 6px rgba(0,0,0,0.5),0 1px 2px rgba(0,0,0,0.3)}
+  [data-palette="cream"]{--bg:#F2ECE0;--white:#FBF7EC;--panel:#FBF7EC;--accent:#8A6E2C;--accent2:#1F3331;--accent-light:#E7DFCE;--accent-lighter:#EFE8D7;--accent-border:#D8CFB7;--accent-text:#1F3331;--blue:#2B5B8E;--blue-light:#E5EBF3;--blue-border:#B8C9DC;--blue-text:#1A3D5F;--green:#4F6B3E;--green-light:#E5EBD8;--green-border:#B8CCA0;--green-text:#33491F;--gold:#B8933E;--text:#1A1A1A;--text2:#4A4538;--text3:#8A7F64;--border:#E1D8C2;--border2:#D1C7AD;--ficha-td1-bg:#F5EED9;--ficha-th-bg:#E7DFCE;--card-tag-bg:#1F3331;--card-tag-fg:#F2ECE0;--sidebar-bg:#1F3331;--sidebar-fg:#F2ECE0;--sidebar-sub:#D1AA53;--sidebar-muted:rgba(242,236,224,0.5);--sidebar-item:rgba(242,236,224,0.72);--sidebar-border:rgba(242,236,224,0.1);--sidebar-hover:rgba(184,147,62,0.18);--sidebar-active-bg:#B8933E;--sidebar-active-fg:#1F3331;--sp-bar-track:rgba(242,236,224,0.12);--sp-bar-fill:#D1AA53;--copy-btn-bg:#FBF7EC;--copy-btn-border:#D1C7AD;--copy-btn-fg:#8A6E2C;--copy-btn-hover-bg:#1F3331;--copy-btn-hover-fg:#F2ECE0;--warn-bg:#F5E4B8;--warn-border:#D1AA53;--warn-accent:#8A6E2C;--warn-label:#5A4414;--warn-text:#5A4414;--insight-bg:#1F3331;--insight-label:#D1AA53;--insight-fg:#F2ECE0;--insight-strong:#D1AA53;--shadow-xs:0 1px 2px rgba(31,51,49,0.06);--shadow-sm:0 1px 3px rgba(31,51,49,0.08),0 1px 2px rgba(31,51,49,0.05)}
+  .palette-toggle{position:fixed;top:14px;right:14px;z-index:100;width:34px;height:34px;border-radius:50%;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all 160ms ease;padding:0}
+  .palette-toggle:hover{color:var(--text);border-color:var(--border2)}
+  .palette-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background 200ms ease,color 200ms ease}
+  .layout{display:flex;min-height:100vh}
+  .sidebar{width:256px;min-width:256px;background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+  .sidebar::-webkit-scrollbar{width:3px}.sidebar::-webkit-scrollbar-track{background:transparent}.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-muted);border-radius:3px}
+  .sidebar-header{padding:20px 16px 16px;border-bottom:1px solid var(--sidebar-border)}
+  .sidebar-logo{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .sidebar-logo img{max-width:148px;height:auto;display:block}
+  .sidebar-logo span{font-size:0.62rem;font-weight:800;color:var(--sidebar-sub);text-transform:uppercase;letter-spacing:0.1em}
+  .sidebar-header h2{font-size:0.88rem;font-weight:700;color:var(--sidebar-fg);letter-spacing:-0.02em}
+  .sidebar-header p{font-size:0.65rem;color:var(--sidebar-sub);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:2px}
+  .sidebar-header .back-link{font-size:0.68rem;color:var(--sidebar-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-bottom:8px;font-weight:600}
+  .sidebar-header .back-link:hover{color:var(--sidebar-fg)}
+  .nav-group{padding:10px 0 2px}
+  .nav-group-title{padding:2px 16px 2px;font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--sidebar-fg)}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 16px;cursor:pointer;transition:all 0.15s;text-decoration:none;color:var(--sidebar-item);font-size:0.74rem;font-weight:400;border-left:2px solid transparent}
+  .nav-item:hover{background:var(--sidebar-hover);color:var(--sidebar-fg)}
+  .nav-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-fg);border-left-color:var(--sidebar-active-fg);font-weight:600}
+  .nav-item .ni-num{font-size:0.6rem;font-weight:600;color:var(--sidebar-muted);min-width:17px}
+  .nav-item.active .ni-num{color:var(--sidebar-active-fg)}
+  .nav-item .ni-check{margin-left:auto;font-size:0.62rem;color:var(--sidebar-muted);opacity:0;transition:opacity 0.2s}
+  .nav-item.completed .ni-check{opacity:1}
+  .sidebar-progress{padding:14px 16px;border-top:1px solid var(--sidebar-border);margin-top:auto}
+  .sp-label{font-size:0.62rem;color:var(--sidebar-muted);margin-bottom:6px}
+  .sp-bar{height:3px;background:var(--sp-bar-track);border-radius:2px;overflow:hidden}
+  .sp-fill{height:100%;background:var(--sp-bar-fill);border-radius:2px;transition:width 0.4s ease;width:0%}
+  .main{flex:1;padding:20px 36px 40px;max-width:780px}
+  .section{display:none;animation:fadeIn 0.25s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+  .breadcrumb{font-size:0.64rem;color:var(--text3);margin-bottom:10px}
+  .breadcrumb a{color:var(--text3);text-decoration:none;font-weight:600}
+  .breadcrumb a:hover{color:var(--accent)}
+  .section-badge{display:inline-block;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;padding:4px 12px;border-radius:4px;margin-bottom:12px;background:var(--accent2);color:var(--bg)}
+  .badge-interface{background:var(--accent2);color:var(--bg)}
+  .badge-cerebro{background:var(--green);color:var(--bg)}
+  .sec-title{font-size:1.2rem;font-weight:800;color:var(--text);letter-spacing:-0.03em;line-height:1.2;margin-bottom:4px}
+  .sec-title .snum{color:var(--accent2)}
+  .sec-title.cerebro .snum{color:var(--green)}
+  .sec-desc{font-size:0.8rem;color:var(--text2);margin-bottom:18px}
+  .lead-text{font-size:0.82rem;color:var(--text);line-height:1.7;margin-bottom:14px}
+  .lead-text strong{font-weight:700;color:var(--accent2)}
+  .overview-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow-xs)}
+  .overview-card h3{font-size:0.84rem;font-weight:700;color:var(--text);margin-bottom:8px}
+  .overview-card p,.overview-card li{font-size:0.76rem;color:var(--text2);line-height:1.6}
+  .overview-card ul{list-style:none;margin-top:8px}
+  .overview-card ul li{padding:4px 0;padding-left:16px;position:relative}
+  .overview-card ul li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .ficha-table{width:100%;border-collapse:collapse;font-size:0.74rem;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:12px 0}
+  .ficha-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;font-size:0.74rem}
+  .ficha-table tr:last-child td{border-bottom:none}
+  .ficha-table td:first-child{font-weight:600;color:var(--text);width:35%;background:var(--ficha-td1-bg)}
+  .copy-wrap{margin:14px 0 16px}
+  .copy-wrap .copy-label{display:inline-block;font-family:'Montserrat',system-ui,sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent2);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--accent2)}
+  .copy-block{position:relative;background:#FFFFFF;border:1px solid var(--border2);border-left:4px solid var(--accent2);border-radius:8px;padding:20px 24px;font-family:'Montserrat','Courier New',system-ui,sans-serif;font-size:0.82rem;color:#0E1A19;line-height:1.72;white-space:pre-wrap;word-break:break-word;font-weight:500;box-shadow:0 1px 3px rgba(31,51,49,0.08),inset 0 0 0 1px rgba(255,255,255,0.6)}
+  [data-palette="dusk"] .copy-block{background:#0F1918;color:#F4F1E3;border-color:#2A433F}
+  .copy-btn{position:absolute;top:8px;right:8px;background:var(--copy-btn-bg);border:1px solid var(--copy-btn-border);color:var(--copy-btn-fg);padding:4px 12px;border-radius:5px;font-size:0.64rem;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:'Montserrat',system-ui,sans-serif}
+  .copy-btn:hover{background:var(--copy-btn-hover-bg);color:var(--copy-btn-hover-fg);border-color:var(--copy-btn-hover-bg)}
+  .link-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--accent-lighter);border:1px solid var(--accent-border);border-radius:8px;padding:12px 16px;margin:14px 0}
+  .link-box .lb-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);width:100%}
+  .link-box a{font-size:0.76rem;color:var(--accent2);font-weight:600;word-break:break-all;text-decoration:none}
+  .link-box a:hover{text-decoration:underline}
+  .download-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent2);border:1px solid var(--accent2);color:var(--bg);padding:10px 18px;border-radius:8px;font-size:0.8rem;font-weight:700;text-decoration:none;transition:all 0.15s;font-family:'Montserrat',system-ui,sans-serif;margin:14px 0}
+  .download-btn:hover{background:var(--gold)}
+  .download-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .img-placeholder{display:flex;align-items:center;gap:10px;border:1px dashed var(--border2);border-radius:8px;padding:14px 16px;margin:14px 0;background:var(--panel);color:var(--text3);font-size:0.74rem;line-height:1.5}
+  .img-placeholder .ip-icon{flex-shrink:0;width:34px;height:34px;border-radius:6px;background:var(--accent-lighter);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+  .img-placeholder .ip-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .img-placeholder strong{color:var(--text2);font-weight:700}
+  .checkpoint{background:var(--green-light);border:1px solid var(--green-border);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0}
+  .checkpoint .cp-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:4px}
+  .checkpoint p{font-size:0.76rem;color:var(--green-text);line-height:1.55}
+  .tip-box{background:var(--accent-lighter);border:1px solid var(--accent-border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0}
+  .tip-box .tip-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:4px}
+  .tip-box p{font-size:0.76rem;color:var(--accent-text);line-height:1.55}
+  .warning-box{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:3px solid var(--warn-accent);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0}
+  .warning-box .warning-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--warn-label);margin-bottom:4px}
+  .warning-box p{font-size:0.76rem;color:var(--warn-text);line-height:1.55}
+  .insight-box{background:var(--insight-bg);border-radius:10px;padding:18px 22px;margin:16px 0;text-align:center}
+  .insight-box .insight-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--insight-label);margin-bottom:6px}
+  .insight-box p{font-size:0.88rem;font-weight:600;color:var(--insight-fg);line-height:1.55}
+  .insight-box p strong{color:var(--insight-strong);font-weight:800}
+  .nav-buttons{display:flex;justify-content:space-between;margin-top:28px;padding-top:14px;border-top:1px solid var(--border)}
+  .nav-btn{display:flex;align-items:center;gap:4px;padding:8px 14px;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--text2);transition:all 0.15s;font-family:'Montserrat',system-ui,sans-serif;text-decoration:none}
+  .nav-btn:hover{background:var(--accent-lighter);border-color:var(--accent-border);color:var(--accent2)}
+  .nav-btn.primary{background:var(--accent2);border-color:var(--accent2);color:var(--bg)}
+  .nav-btn.primary:hover{background:var(--gold);color:var(--bg)}
+  @media(max-width:768px){.sidebar{display:none}.main{padding:20px 16px 40px;max-width:100%}}
+</style>
+</head>
+<body>
+
+<button class="palette-toggle" id="palette-toggle" onclick="togglePalette()" title="Modo claro">
+  <svg id="palette-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./logo_delta.png" alt="Delta Academy">
+      </div>
+      <a class="back-link" href="index.html">&#8592; Catálogo de Tools</a>
+      <h2>Second Brain Remix</h2>
+      <p>Seu Conselho de Mentores</p>
+    </div>
+
+    <div class="nav-group"><div class="nav-group-title">Início</div>
+      <a class="nav-item active" data-section="sec-home" onclick="showSection('sec-home')"><span class="ni-num">00</span> Visão Geral<span class="ni-check">&#10003;</span></a>
+    </div>
+    <div class="nav-group"><div class="nav-group-title">Aba 1 &middot; A Interface</div>
+      <a class="nav-item" data-section="sec-1-1" onclick="showSection('sec-1-1')"><span class="ni-num">1.1</span> Clone o projeto no Lovable<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-1-2" onclick="showSection('sec-1-2')"><span class="ni-num">1.2</span> Troque a identidade visual<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-1-3" onclick="showSection('sec-1-3')"><span class="ni-num">1.3</span> Defina os conselheiros<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-1-4" onclick="showSection('sec-1-4')"><span class="ni-num">1.4</span> Configure o admin<span class="ni-check">&#10003;</span></a>
+    </div>
+    <div class="nav-group"><div class="nav-group-title">Aba 2 &middot; O Cérebro</div>
+      <a class="nav-item" data-section="sec-2-1" onclick="showSection('sec-2-1')"><span class="ni-num">2.1</span> Baixe e instale as skills<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-2-2" onclick="showSection('sec-2-2')"><span class="ni-num">2.2</span> Rode a varredura<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-2-3" onclick="showSection('sec-2-3')"><span class="ni-num">2.3</span> Alimente o cérebro<span class="ni-check">&#10003;</span></a>
+      <a class="nav-item" data-section="sec-2-4" onclick="showSection('sec-2-4')"><span class="ni-num">2.4</span> Repita e teste o Conselho<span class="ni-check">&#10003;</span></a>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="sp-label">Progresso &mdash; <span id="pct">0</span>%</div>
+      <div class="sp-bar"><div class="sp-fill" id="sp-fill"></div></div>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- 00 Visão Geral -->
+    <div class="section active" id="sec-home">
+      <div class="breadcrumb">Delta Academy &rsaquo; <a href="index.html">Tools</a> &rsaquo; Second Brain Remix</div>
+      <div class="sec-title"><span class="snum">00.</span> Visão Geral</div>
+      <div class="sec-desc">Second Brain Remix, seu Conselho de Mentores</div>
+      <p class="lead-text">Você não vai construir do zero. Vai partir de um projeto pronto no <strong>Lovable</strong>, deixá-lo com a sua cara e, depois, dar memória e comportamento a cada conselheiro. O resultado: um <strong>Conselho de Mentores</strong> que delibera junto sobre as suas decisões.</p>
+      <div class="overview-card">
+        <h3>Ficha técnica</h3>
+        <table class="ficha-table"><tbody>
+          <tr><td>Aula</td><td>Second Brain Remix, seu Conselho de Mentores</td></tr>
+          <tr><td>Ferramentas</td><td>Lovable &middot; Manus &middot; skill segundo-cerebro-digital</td></tr>
+          <tr><td>Estrutura</td><td>Aba 1 &mdash; A Interface &middot; Aba 2 &mdash; O Cérebro</td></tr>
+          <tr><td>Nível</td><td>Intermediário</td></tr>
+        </tbody></table>
+      </div>
+      <div class="overview-card">
+        <h3>O caminho em duas abas</h3>
+        <ul>
+          <li><strong>Aba 1 — A Interface:</strong> clonar o projeto, aplicar sua marca, definir os conselheiros e configurar o admin</li>
+          <li><strong>Aba 2 — O Cérebro:</strong> raspar o conteúdo público de cada mentor e alimentar o knowledge base certo</li>
+        </ul>
+      </div>
+      <div class="nav-buttons">
+        <a class="nav-btn" href="index.html">&#8617; Voltar ao catálogo</a>
+        <button class="nav-btn primary" onclick="showSection('sec-1-1')">Começar &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 1.1 -->
+    <div class="section" id="sec-1-1">
+      <span class="section-badge badge-interface">Aba 1 &middot; A Interface</span>
+      <div class="sec-title"><span class="snum">1.1</span> Clone o projeto no Lovable</div>
+      <div class="sec-desc">Parta de um projeto pronto e faça o seu remix</div>
+      <p class="lead-text">Você não vai construir do zero. Vai partir de um projeto pronto e fazer o seu próprio remix. Abra o link abaixo e clique em <strong>remixar</strong> para gerar uma cópia na sua conta Lovable.</p>
+      <div class="link-box">
+        <span class="lb-label">Link do projeto</span>
+        <a href="https://lovable.dev/projects/9259a4b1-1d4e-479e-b166-07a256203a7d?magic_link=mc_a37cf727-cf13-4834-89d9-a8801d79ab41" target="_blank" rel="noopener">https://lovable.dev/projects/9259a4b1-1d4e-479e-b166-07a256203a7d</a>
+      </div>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 1</strong> &mdash; tela do Lovable com botão de remix/clone destacado.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>Você tem uma cópia do projeto rodando na sua conta, com URL própria.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-home')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-1-2')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="section" id="sec-1-2">
+      <span class="section-badge badge-interface">Aba 1 &middot; A Interface</span>
+      <div class="sec-title"><span class="snum">1.2</span> Troque a identidade visual</div>
+      <div class="sec-desc">Deixe a interface com a sua cara</div>
+      <p class="lead-text">Primeiro a casca. Deixe a interface com a sua cara: cores, nome do produto, logo. Cole o prompt abaixo no chat do Lovable e ajuste os colchetes.</p>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt &middot; identidade visual</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-1-2').textContent)">Copiar</button>
+<span id="txt-1-2">Quero adaptar a identidade visual deste projeto para a minha marca.
+
+Nome do produto: [NOME DO SEU CONSELHO, ex: "Conselho [Sua Empresa]"]
+Cor primária: [HEX, ex: #1F3331]
+Cor de destaque: [HEX, ex: #C4A35A]
+Logo: vou subir o arquivo, aplique no header e na tela de login.
+Tom visual: [ex: sóbrio e executivo / clean e moderno].
+
+Mantenha toda a estrutura e funcionalidade atuais.
+Altere apenas cores, nome, logo e textos de marca.
+Não mexa na lógica de usuários, admin ou knowledge base.</span>
+        </div>
+      </div>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 2</strong> &mdash; antes e depois da troca de cores/logo na home.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>Interface com nome e cores da sua marca, sem quebrar função.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-1-1')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-1-3')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="section" id="sec-1-3">
+      <span class="section-badge badge-interface">Aba 1 &middot; A Interface</span>
+      <div class="sec-title"><span class="snum">1.3</span> Defina quem são os conselheiros</div>
+      <div class="sec-desc">O coração da decisão</div>
+      <p class="lead-text">Agora o coração da decisão. Quem entra no seu Conselho? Três caminhos:</p>
+      <div class="overview-card">
+        <ul>
+          <li><strong>Você mesmo</strong> &mdash; sua versão destilada</li>
+          <li><strong>Seu time de liderança</strong> &mdash; cada diretor vira um conselheiro consultável</li>
+          <li><strong>Mentores e referências externas</strong> &mdash; pessoas que você gostaria de consultar sob demanda</li>
+        </ul>
+      </div>
+      <p class="lead-text">Escolha de <strong>3 a 5</strong> para começar.</p>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt &middot; conselheiros</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-1-3').textContent)">Copiar</button>
+<span id="txt-1-3">Quero configurar os conselheiros deste projeto.
+
+Substitua os conselheiros atuais por estes:
+1. Nome: [NOME] | Papel: [ex: Mentor de Vendas] | Descrição curta: [1 frase]
+2. Nome: [NOME] | Papel: [ex: Conselheiro Financeiro] | Descrição curta: [1 frase]
+3. Nome: [NOME] | Papel: [ex: Especialista em Operações] | Descrição curta: [1 frase]
+[adicione quantos quiser, de 3 a 5]
+
+Para cada conselheiro, crie o card na interface com nome, papel e descrição.
+Cada conselheiro deve ter seu próprio knowledge base separado (vou alimentar depois).
+Mantenha a feature de Conselho, onde todos deliberam juntos sobre a mesma pergunta.</span>
+        </div>
+      </div>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 3</strong> &mdash; tela de seleção de conselheiros com os novos cards.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>Conselheiros na tela, card próprio cada, opção de Conselho visível.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-1-2')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-1-4')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="section" id="sec-1-4">
+      <span class="section-badge badge-interface">Aba 1 &middot; A Interface</span>
+      <div class="sec-title"><span class="snum">1.4</span> Configure o admin</div>
+      <div class="sec-desc">Seu painel de controle</div>
+      <p class="lead-text">O admin é o seu painel de controle. Por ele você sobe o knowledge base de cada conselheiro e aprova ou bloqueia quem acessa a ferramenta.</p>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt &middot; painel de administração</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-1-4').textContent)">Copiar</button>
+<span id="txt-1-4">Quero configurar o painel de administração deste projeto.
+
+O admin deve permitir:
+1. Upload de arquivos de knowledge base, com seleção de qual conselheiro
+   aquele material alimenta (um seletor de mentor antes do upload).
+2. Gestão de usuários: aprovar ou recusar novos cadastros, e bloquear
+   acessos existentes.
+
+Defina meu e-mail como administrador: [SEU E-MAIL]
+Novos usuários entram como "pendentes" até aprovação manual no admin.</span>
+        </div>
+      </div>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 4</strong> &mdash; painel admin com área de upload (seletor de mentor) e lista de pendentes.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint &middot; Aba 1</div><p>Marca aplicada, conselheiros definidos, admin com upload por mentor e aprovação de usuários. A casca está pronta. Falta o cérebro.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-1-3')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-2-1')">Ir para a Aba 2 &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 2.1 -->
+    <div class="section" id="sec-2-1">
+      <span class="section-badge badge-cerebro">Aba 2 &middot; O Cérebro</span>
+      <div class="sec-title cerebro"><span class="snum">2.1</span> Baixe e instale as skills no seu Manus</div>
+      <div class="sec-desc">A interface está pronta — agora os conselheiros ganham memória</div>
+      <p class="lead-text">A interface está pronta, mas os conselheiros estão vazios. Agora você dá memória e comportamento a cada um. O método: raspar o conteúdo público da pessoa (com foco em transcrições de YouTube), gerar um pacote de conhecimento e subir no card do mentor certo.</p>
+      <p class="lead-text">Você não vai raspar nada na mão. Use a skill que já preparei. Baixe o arquivo abaixo e instale no seu Manus.</p>
+      <a class="download-btn" href="segundo-cerebro-digital.skill" download>
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        segundo-cerebro-digital.skill
+      </a>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 5</strong> &mdash; tela do Manus mostrando onde importar a skill.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>A skill aparece instalada e disponível no Manus.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-1-4')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-2-2')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="section" id="sec-2-2">
+      <span class="section-badge badge-cerebro">Aba 2 &middot; O Cérebro</span>
+      <div class="sec-title cerebro"><span class="snum">2.2</span> Rode a varredura de um mentor</div>
+      <div class="sec-desc">Um mentor de cada vez, em 7 fases</div>
+      <p class="lead-text">Comece por um mentor de cada vez. A skill parte do LinkedIn da pessoa, mapeia a presença digital dela e coleta o conteúdo público (com foco em transcrições de YouTube). Roda em <strong>7 fases</strong> e entrega um ZIP pronto para virar knowledge base. A varredura completa leva algumas horas, então dispare um mentor e siga para o próximo enquanto roda.</p>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt &middot; varredura</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-2-2').textContent)">Copiar</button>
+<span id="txt-2-2">Use a skill segundo-cerebro-digital.
+
+Pessoa-alvo: [NOME DO MENTOR]
+LinkedIn: [URL DO LINKEDIN DO MENTOR]
+
+Rode as 7 fases completas e gere o ZIP final com:
+relatório executivo, personas contextuais, prompts para RAG e grafo
+de conhecimento. Priorize transcrições de vídeos do YouTube e demais
+conteúdo público autoral da pessoa.
+
+O foco é capturar o jeito de pensar e de se expressar, não só os fatos.</span>
+        </div>
+      </div>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 6</strong> &mdash; Manus rodando a varredura e o ZIP gerado ao final.</div></div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>Você tem um ZIP com o segundo cérebro do mentor.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-2-1')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-2-3')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="section" id="sec-2-3">
+      <span class="section-badge badge-cerebro">Aba 2 &middot; O Cérebro</span>
+      <div class="sec-title cerebro"><span class="snum">2.3</span> Alimente o cérebro do conselheiro</div>
+      <div class="sec-desc">Leve o conhecimento ao conselheiro certo</div>
+      <p class="lead-text">Com o ZIP em mãos, leve o conhecimento ao conselheiro certo. Dois caminhos:</p>
+      <div class="overview-card">
+        <ul>
+          <li><strong>Pelo admin (recomendado):</strong> abra o admin, selecione o mentor e suba os arquivos</li>
+          <li><strong>Direto no Lovable:</strong> direcione o material ao mentor pelo fluxo do projeto</li>
+        </ul>
+      </div>
+      <p class="lead-text">Sempre indique a qual conselheiro o material pertence, para não misturar cérebros.</p>
+      <div class="img-placeholder"><div class="ip-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div><strong>Print 7</strong> &mdash; admin com seletor de mentor escolhido e arquivos carregando.</div></div>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt &middot; alimentar via Lovable</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-2-3').textContent)">Copiar</button>
+<span id="txt-2-3">Vou alimentar o knowledge base de um conselheiro específico.
+
+Conselheiro: [NOME DO MENTOR]
+Material: arquivos extraídos da varredura (relatório, personas, prompts RAG, grafo).
+
+Associe todo este material exclusivamente ao knowledge base deste
+conselheiro. Não misture com os outros mentores.
+Quando eu conversar com ele, as respostas devem refletir o conteúdo
+e o estilo presentes nesse material.</span>
+        </div>
+      </div>
+      <div class="checkpoint"><div class="cp-label">Checkpoint</div><p>Ao conversar com o conselheiro, as respostas refletem conteúdo e estilo.</p></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-2-2')">&#8592; Anterior</button>
+        <button class="nav-btn primary" onclick="showSection('sec-2-4')">Próximo &#8594;</button>
+      </div>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="section" id="sec-2-4">
+      <span class="section-badge badge-cerebro">Aba 2 &middot; O Cérebro</span>
+      <div class="sec-title cerebro"><span class="snum">2.4</span> Repita e teste o Conselho</div>
+      <div class="sec-desc">Com 3+ cérebros, coloque o Conselho para deliberar</div>
+      <p class="lead-text">Repita <strong>2.2</strong> e <strong>2.3</strong> para cada conselheiro. Com pelo menos 3 cérebros alimentados, teste o Conselho: faça uma pergunta de decisão real e veja os mentores deliberarem juntos.</p>
+      <div class="copy-wrap">
+        <span class="copy-label">Prompt de teste</span>
+        <div class="copy-block">
+<button class="copy-btn" onclick="copyText(this,document.getElementById('txt-2-4').textContent)">Copiar</button>
+<span id="txt-2-4">Estou avaliando subir o preço do meu produto principal em 15%.
+Conselho, o que cada um de vocês recomenda e por quê?</span>
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="insight-label">Checkpoint final</div>
+        <p>Seu Conselho funcionando, <strong>3+ mentores</strong> que respondem no estilo deles e deliberam juntos sobre as suas decisões.</p>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showSection('sec-2-3')">&#8592; Anterior</button>
+        <a class="nav-btn primary" href="index.html">&#8617; Voltar ao catálogo</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function(){
+    const KEY="delta-tools-palette";
+    const SUN='<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    const MOON='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    function apply(p){document.documentElement.setAttribute("data-palette",p);localStorage.setItem(KEY,p);const icon=document.getElementById("palette-icon");if(icon)icon.innerHTML=p==="dusk"?SUN:MOON;const btn=document.getElementById("palette-toggle");if(btn)btn.title=p==="dusk"?"Modo claro":"Modo escuro";}
+    window.togglePalette=function(){apply(document.documentElement.getAttribute("data-palette")==="dusk"?"cream":"dusk");};
+    apply(localStorage.getItem(KEY)||"dusk");
+  })();
+
+  const PKEY="delta-tools-second-brain-remix-conselho";
+  const completed=new Set(JSON.parse(localStorage.getItem(PKEY)||"[]"));
+  const TOTAL=9;
+
+  function renderProgress(){
+    document.querySelectorAll(".nav-item").forEach(ni=>{ni.classList.toggle("completed",completed.has(ni.dataset.section));});
+    const pct=Math.round((completed.size/TOTAL)*100);
+    document.getElementById("pct").textContent=pct;
+    document.getElementById("sp-fill").style.width=pct+"%";
+  }
+
+  function showSection(id){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+    const sec=document.getElementById(id);if(sec)sec.classList.add("active");
+    const nav=document.querySelector(`.nav-item[data-section="${id}"]`);if(nav)nav.classList.add("active");
+    completed.add(id);localStorage.setItem(PKEY,JSON.stringify([...completed]));
+    renderProgress();window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function copyText(btn,text){
+    navigator.clipboard.writeText(text).then(()=>{const old=btn.textContent;btn.textContent="Copiado ✓";setTimeout(()=>btn.textContent=old,1600);});
+  }
+
+  completed.add("sec-home");
+  renderProgress();
+</script>
+</body>
+</html>
